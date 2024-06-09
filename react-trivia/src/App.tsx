@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as Questions from './Questions';
 
 function App() {
+  // Sets all the variables
   const [index, setIndex] = useState(0);
   const [answer, setAnswer] = useState('');
   const questionData = Questions.questionData(index);
@@ -18,6 +19,7 @@ function App() {
   const [scoreVisible, setScoreVisible] = useState(false);
   const [submitClicked, setSubmitClicked] = useState(false);
 
+  //Created a function to update the answer and see visibilities of the buttons
   function updateAnswer() {
     if (submitClicked == false) {
       Questions.updateAnswer(index, answer);
@@ -33,6 +35,7 @@ function App() {
     }
   }
 
+  //Decreases the index to the questions
   const handlePrevClick = () => {
     updateAnswer();
     if (index == 1) {
@@ -43,6 +46,7 @@ function App() {
     setIndex(index - 1);
   };
 
+  //Increases the index to the questions
   const handleNextClick = () => {
     updateAnswer();
     if (index == 23) {
@@ -55,8 +59,11 @@ function App() {
     setIndex(index + 1);
   };
 
+
+  //Hnadles the submit button.
   const handleSubmitClick = () => {
     updateAnswer();
+    //Sets the variable and loops through the questions and answers to count the correct responses.
     let newScore = 0;
     for (let i = 0; i < 25; i++) {
       const qData = Questions.questionData(i);
@@ -64,8 +71,11 @@ function App() {
         newScore += 1;
       }
     }
+
+    //Resets the index to the first question.
     setIndex(0);
     setScore(newScore);
+    //Shows the values that need to be shown.
     setSubmitClicked(true);
     setPrevVisible(true);
     setNextVisible(true);
@@ -75,6 +85,7 @@ function App() {
     setScoreVisible(true);
   };
 
+  //Sets answer to t or f bepending upon which button is clicked.
   const handleTrueClick = () => {
     setAnswer('t');
   };
@@ -83,6 +94,7 @@ function App() {
     setAnswer('f');
   };
 
+  //DIsplays the buttons accordingly.
   return (
     <div>
       <p>Question {index + 1}</p>
@@ -97,7 +109,7 @@ function App() {
         {falseVisible && <button onClick={handleFalseClick}>False</button>}
       </div>
       <div>
-        {!prevVisible && <button>****</button>}
+        {!prevVisible && <button>** **</button>}
         {prevVisible && <button onClick={handlePrevClick}>Prev</button>}
         {nextVisible && <button onClick={handleNextClick}>Next</button>}
         {submitVisible && <button onClick={handleSubmitClick}>Submit</button>}
